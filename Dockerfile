@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM andbobsyouruncle/rpi-python
 MAINTAINER Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>
 
 # Uncomment any of the following lines to disable the installation.
@@ -15,8 +15,8 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy build scripts
-COPY virtualization/Docker/ virtualization/Docker/
-RUN virtualization/Docker/setup_docker_prereqs
+# COPY virtualization/Docker/ virtualization/Docker/
+# RUN virtualization/Docker/setup_docker_prereqs
 
 # Install hass component dependencies
 COPY requirements_all.txt requirements_all.txt
@@ -26,4 +26,6 @@ RUN pip3 install --no-cache-dir -r requirements_all.txt && \
 # Copy source
 COPY . .
 
-CMD [ "python", "-m", "homeassistant", "--config", "/config" ]
+EXPOSE 8123
+
+CMD [ "python3", "-m", "homeassistant", "--config", "/config" ]
